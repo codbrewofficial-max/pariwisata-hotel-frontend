@@ -1,19 +1,22 @@
 import type { MetadataRoute } from "next";
-import { getSiteConfig, getAllItemsMeta } from "@/lib/data";
+import { getSiteConfig, getAllRoomSlugs } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
-  const items = getAllItemsMeta();
+  const slugs = getAllRoomSlugs();
 
   const staticRoutes = [
     { url: baseUrl, lastModified: new Date() },
-    { url: `${baseUrl}/contoh`, lastModified: new Date() },
+    { url: `${baseUrl}/kamar`, lastModified: new Date() },
+    { url: `${baseUrl}/fasilitas`, lastModified: new Date() },
+    { url: `${baseUrl}/tentang`, lastModified: new Date() },
+    { url: `${baseUrl}/kontak`, lastModified: new Date() },
   ];
 
-  const itemRoutes = items.map((item) => ({
-    url: `${baseUrl}/${item.category}/${item.slug}`,
+  const roomRoutes = slugs.map((slug) => ({
+    url: `${baseUrl}/kamar/${slug}`,
     lastModified: new Date(),
   }));
 
-  return [...staticRoutes, ...itemRoutes];
+  return [...staticRoutes, ...roomRoutes];
 }

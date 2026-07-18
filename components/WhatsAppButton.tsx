@@ -5,13 +5,21 @@ interface WhatsAppButtonProps {
   message: string;
   label?: string;
   className?: string;
+  variant?: "primary" | "accent" | "ghost";
 }
+
+const VARIANT_CLASS: Record<string, string> = {
+  primary: "bg-teal hover:bg-teal-dark focus:ring-teal/40",
+  accent: "bg-coral hover:bg-coral-dark focus:ring-coral/40",
+  ghost: "border border-sand-200 bg-surface text-ink hover:bg-sand-100",
+};
 
 export default function WhatsAppButton({
   waNumber,
   message,
   label = "Hubungi via WhatsApp",
   className,
+  variant = "primary",
 }: WhatsAppButtonProps) {
   const href = buildWaLink(waNumber, message);
   return (
@@ -20,7 +28,9 @@ export default function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       className={
-        "inline-flex items-center justify-center gap-2 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700 " +
+        "inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition focus:outline-none focus:ring-2 " +
+        (VARIANT_CLASS[variant] ?? VARIANT_CLASS.primary) +
+        " " +
         (className ?? "")
       }
     >
