@@ -52,6 +52,12 @@ export default async function RootLayout({
 }) {
   const config = getSiteConfig();
 
+  // Pitching page only visible before the site is sold (isPaid === false),
+  // same principle as the watermark. Nav link follows this rule.
+  const nav = config.isPaid
+    ? NAV
+    : [...NAV, { label: "Kenapa Website Ini?", href: "/kenapa-pakai-website-ini" }];
+
   return (
     <html lang="id" className={`${inter.variable} ${fraunces.variable}`}>
       <head>
@@ -65,7 +71,7 @@ export default async function RootLayout({
       <body>
         <GtmNoScript />
         <div className="flex min-h-screen flex-col">
-          <Header siteName={config.site_name} nav={NAV} />
+          <Header siteName={config.site_name} nav={nav} />
           <main className="flex-1">{children}</main>
           <Footer
             siteName={config.site_name}
